@@ -10,6 +10,9 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
+      - name: Stop existing Docker container
+        run: |
+          docker-compose stop Kevlar
       - name: Build and run Docker Compose
         run: |
           docker-compose up --build -d
