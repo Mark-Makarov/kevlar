@@ -18,14 +18,6 @@ jobs:
       - name: Stop and remove containers, networks
         run: |
           if docker ps -a | grep Kevlar ; then
-            sudo docker stop Kevlar
-            docker rm -f Kevlar
-          else
-            echo "Container Kevlar does not exist"
-          fi
-      - name: Remove unused data
-        run: |
-          if docker ps -a | grep Kevlar ; then
             docker rm -f Kevlar
           else
             echo "Container Kevlar does not exist"
