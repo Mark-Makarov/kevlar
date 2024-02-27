@@ -34,7 +34,7 @@ export default function Home() {
           src="/next.svg"
           alt="Next.js Logo"
           width={290}
-          height={37}
+          height={57}
           priority
         />
       </div>
