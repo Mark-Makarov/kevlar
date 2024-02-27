@@ -16,9 +16,20 @@ jobs:
     needs: checkout
     steps:
       - name: Stop and remove containers, networks
-        run: sudo docker stop Kevlar
+        run: |
+          if docker ps -a | grep Kevlar ; then
+            sudo docker stop Kevlar
+            docker rm -f Kevlar
+          else
+            echo "Container Kevlar does not exist"
+          fi
       - name: Remove unused data
-        run: docker rm -f Kevlar
+        run: |
+          if docker ps -a | grep Kevlar ; then
+            docker rm -f Kevlar
+          else
+            echo "Container Kevlar does not exist"
+          fi
   deploy:
     runs-on: self-hosted
     needs: prepare-environment
