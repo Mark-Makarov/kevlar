@@ -16,9 +16,9 @@ jobs:
     needs: checkout
     steps:
       - name: Stop and remove containers, networks
-        run: docker-compose down kevlar
+        run: sudo docker stop Kevlar
       - name: Remove unused data
-        run: docker-compose rm -f kevlar
+        run: docker-compose rm -f Kevlar
   deploy:
     runs-on: self-hosted
     needs: prepare-environment
