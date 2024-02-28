@@ -1,3 +1,45 @@
-.ace-editor-block {
-    width: 100%;
+.ace-editor-wrapper {
+    width: 100% !important;
+}
+
+.ace_editor {
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border-top: none;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(249, 249, 249, 0.08);
+    font-weight: 500 !important;
+    font-size: 17px !important;
+    line-height: 1.5rem !important;
+}
+
+.ace_content {
+    width: 100% !important;
+    top: 12px !important;
+    left: 12px !important;
+}
+
+.ace_scrollbar {
+    display: none !important;
+}
+
+.ace_scroller {
+    width: 100% !important;
+}
+
+.editor-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    border: 2px solid rgba(249, 249, 249, 0.08);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.language-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
