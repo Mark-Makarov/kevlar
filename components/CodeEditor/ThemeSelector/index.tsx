@@ -1,62 +1,52 @@
 "use client";
 
 // react/next.js
-import { useState} from "react";
+import { useState } from "react";
 
 // libraries
 import OutsideClickHandler from "react-outside-click-handler";
 
 // constants
-import { LANGUAGES } from "@/constants/languages"
+import { THEMES } from "@/constants/themes";
 
 // components
 import { ChevronDown } from "lucide-react"
 
-// styles
-import "./style.css"
-
-interface LanguageSelectorProps {
-    selectedLanguage: string;
-    setSelectedLanguage: (language: string) => void;
-    setLanguageIcon: (icon: string) => void;
+interface ThemeSelectorProps {
+    selectedTheme: string;
+    setSelectedTheme: (theme: string) => void;
 }
 
-const LanguageSelector = ({
-selectedLanguage,
-setSelectedLanguage,
-setLanguageIcon,
-}: LanguageSelectorProps) => {
-    const [showDropdown, setShowDropdown] = useState(false);
+const ThemeSelector = ({
+selectedTheme,
+setSelectedTheme,
+}: ThemeSelectorProps) => {
+    const [ showDropdown, setShowDropdown ] = useState(false);
 
     const toggleDropdown = () => {
-      setShowDropdown(prev => !prev)
+        setShowDropdown(prev => !prev)
     };
 
-    const handleLanguageChange = (language: string) => {
-        setSelectedLanguage(language);
-        const iconPath = LANGUAGES.find(({name}) => name === language)?.iconPath
-
-        if (iconPath) {
-            setLanguageIcon(iconPath)
-        }
+    const handleThemeChange = (theme: string) => {
+        setSelectedTheme(theme);
     };
 
     return (
         <OutsideClickHandler onOutsideClick={() => setShowDropdown(false)}>
             <div onClick={toggleDropdown}>
-                <p className="py-[5px] text-sm font-medium">Язык</p>
+                <p className="py-[5px] text-sm font-medium">Тема</p>
                 <div className="dropdown-title capitalize w-[120px] hover:border-white ease-linear transition-all duration-300">
-                    {selectedLanguage}
+                    {selectedTheme}
                     <ChevronDown />
                 </div>
                 {showDropdown && (
                     <div className="dropdown-menu w-[120px]">
-                        {LANGUAGES.map(({name}) => {
+                        {THEMES.map(({name, alias}) => {
                             return (
                                 <div key={name}>
                                     <button
                                         className="dropdown-item text-left hover:text-white ease-linear transition-all duration-300"
-                                        onClick={() => handleLanguageChange(name)}
+                                        onClick={() => handleThemeChange(alias)}
                                     >
                                         {name}
                                     </button>
@@ -70,4 +60,4 @@ setLanguageIcon,
     );
 };
 
-export default LanguageSelector;
+export default ThemeSelector;

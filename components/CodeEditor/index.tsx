@@ -1,5 +1,8 @@
 "use client";
 
+// react/next.js
+import { useEffect, useState } from "react";
+
 // libraries
 import { Resizable } from "re-resizable";
 import AceEditor from "react-ace";
@@ -13,10 +16,6 @@ import "ace-builds/src-noconflict/theme-ambiance"
 import "ace-builds/src-noconflict/theme-cloud9_night"
 import "ace-builds/src-noconflict/theme-cobalt"
 import "ace-builds/src-noconflict/theme-github_dark"
-import "ace-builds/src-noconflict/theme-chrome"
-import "ace-builds/src-noconflict/theme-clouds_midnight"
-import "ace-builds/src-noconflict/theme-monokai"
-import "ace-builds/src-noconflict/theme-xcode"
 import "ace-builds/src-noconflict/theme-one_dark"
 
 // languages highlights
@@ -29,30 +28,33 @@ import "ace-builds/src-noconflict/mode-python"
 import "ace-builds/src-noconflict/mode-rust"
 import "ace-builds/src-noconflict/mode-java"
 import "ace-builds/src-noconflict/mode-c_cpp"
-import {useEffect, useState} from "react";
 
 interface CodeEditorProps {
-    onCodeChange: (code: string) => void;
     selectedLanguage: string;
-    theme: string;
+    selectedTheme: string;
     languageIcon: string;
-    background?: string;
+    selectedBackground?: string;
     currentPadding?: string;
 }
 
 const CodeEditor = ({
-onCodeChange,
 selectedLanguage,
-theme,
+selectedTheme,
 languageIcon,
-background,
+selectedBackground,
 currentPadding,
 }: CodeEditorProps) => {
-    const [height, setHeight] = useState<number | null>(500);
-    const [width, setWidth] = useState(800);
+    const [ height, setHeight ] = useState<number | null>(500);
+    const [ width, setWidth ] = useState(800);
+    const [ title, setTitle  ] = useState("Заголовок")
+    const [ code, _  ] = useState("function() { console.log(\"Hi\") }")
+
+    // const handleCodeChange = (nextCode: string) => {
+    //     setCode(nextCode)
+    // }
 
     // @ts-ignore
-    const resizeHandler = (evt, direction, ref, pos) => {
+    const resizeHandler = (evt, direction, ref) => {
         const currentHeight = parseInt(ref.style.height);
         setHeight(currentHeight)
     }
@@ -79,8 +81,9 @@ currentPadding,
             }}
             onResize={resizeHandler}
             className="resizable-container relative"
+            style={{ background: selectedBackground}}
         >
-            <div className="editor-container">
+            <div className="editor-container" style={{ padding: currentPadding}}>
                 <div className="editor-title h-[52px] px-4 bg-black bg-opacity-80">
                     <div className="dots flex items-center gap-1">
                         <div className="w-3 h-3 rounded-full bg-[#ff5656]" />
@@ -88,17 +91,23 @@ currentPadding,
                         <div className="w-3 h-3 rounded-full bg-[#67f772]" />
                     </div>
                     <div className="input-control w-full">
-                        <input type="text" className="w-full text-[hsla(0,0%,100%,.6)] outline-none font-medium text-center bg-transparent" />
+                        <input
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            type="text"
+                            className="w-full text-[hsla(0,0%,100%,.6)] outline-none font-medium text-center bg-transparent px-5 truncate"
+                        />
                     </div>
-                    <div className="language-icon p-1 bg-black bg-opacity-30 rounded-sm w-full">
-                        <img className="w-[35px]" src={languageIcon} alt="language-icon"/>
+                    <div className="language-icon p-1 bg-black bg-opacity-30 rounded-md">
+                        <img className="w-[34px]" src={languageIcon} alt="language-icon"/>
                     </div>
                 </div>
                 <AceEditor
-                    value={"function() { console.log(\"Hi\") }"}
+                    value={code}
                     editorProps={{ $blockScrolling: true }}
                     fontSize={16}
-                    theme="monokai"
+                    theme={selectedTheme}
+                    height={`calc(${height}px - ${currentPadding} - ${currentPadding} - 52px)`}
                     mode={selectedLanguage.toLowerCase()}
                     wrapEnabled
                     showPrintMargin={false}

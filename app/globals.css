@@ -14,3 +14,13 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+
+.header {
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  width: 940px;
+  background-color: #191919;
+  border-color: #3C3C3C;
+}

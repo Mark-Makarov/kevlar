@@ -9,3 +9,12 @@
     font-size: 0.9rem;
     cursor: pointer;
 }
+
+.dropdown-menu {
+    position: absolute;
+    padding: 0.25rem 0 0.4rem 0.5rem;
+    background-color: #131313;
+    border: 1px solid #3c3c3c;
+    border-radius: 3px;
+    top: 90px;
+}
