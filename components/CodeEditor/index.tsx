@@ -1,11 +1,14 @@
 "use client";
 
 // react/next.js
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef, Ref } from "react";
 
 // libraries
 import { Resizable } from "re-resizable";
 import AceEditor from "react-ace";
+
+// components
+import Header from "@/components/CodeEditor/Header";
 
 // styles
 import "./style.css"
@@ -37,24 +40,22 @@ interface CodeEditorProps {
     currentPadding?: string;
 }
 
-const CodeEditor = ({
+const CodeEditor = forwardRef(({
 selectedLanguage,
 selectedTheme,
 languageIcon,
 selectedBackground,
 currentPadding,
-}: CodeEditorProps) => {
+}: CodeEditorProps , ref: Ref<HTMLDivElement>) => {
     const [ height, setHeight ] = useState<number | null>(500);
-    const [ width, setWidth ] = useState(800);
-    const [ title, setTitle  ] = useState("Заголовок")
-    const [ code, _  ] = useState("function() { console.log(\"Hi\") }")
+    const [ width, setWidth ] = useState(900);
+    const [ code, setCode  ] = useState("function() { console.log(\"Hi\") }")
 
-    // const handleCodeChange = (nextCode: string) => {
-    //     setCode(nextCode)
-    // }
+    const handleCodeChange = (nextCode: string) => {
+        setCode(nextCode)
+    }
 
-    // @ts-ignore
-    const resizeHandler = (evt, direction, ref) => {
+    const resizeHandler = (ref: HTMLElement) => {
         const currentHeight = parseInt(ref.style.height);
         setHeight(currentHeight)
     }
@@ -70,55 +71,40 @@ currentPadding,
     }, [])
 
     return (
-        <Resizable
-            minHeight={450}
-            maxHeight={700}
-            minWidth={550}
-            maxWidth={1000}
-            defaultSize={{
-                height: height || 500,
-                width
-            }}
-            onResize={resizeHandler}
-            className="resizable-container relative"
-            style={{ background: selectedBackground}}
-        >
-            <div className="editor-container" style={{ padding: currentPadding}}>
-                <div className="editor-title h-[52px] px-4 bg-black bg-opacity-80">
-                    <div className="dots flex items-center gap-1">
-                        <div className="w-3 h-3 rounded-full bg-[#ff5656]" />
-                        <div className="w-3 h-3 rounded-full bg-[#ffbc6a]" />
-                        <div className="w-3 h-3 rounded-full bg-[#67f772]" />
-                    </div>
-                    <div className="input-control w-full">
-                        <input
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            type="text"
-                            className="w-full text-[hsla(0,0%,100%,.6)] outline-none font-medium text-center bg-transparent px-5 truncate"
-                        />
-                    </div>
-                    <div className="language-icon p-1 bg-black bg-opacity-30 rounded-md">
-                        <img className="w-[34px]" src={languageIcon} alt="language-icon"/>
-                    </div>
+        <div className="code-editor mt-[14rem]" ref={ref}>
+            <Resizable
+                minHeight={450}
+                maxHeight={2000}
+                minWidth={550}
+                maxWidth={1200}
+                defaultSize={{
+                    height: height || 500,
+                    width
+                }}
+                onResize={(evt, direction, ref) => resizeHandler(ref)}
+                className="resizable-container relative"
+                style={{ background: selectedBackground}}
+            >
+                <div className="editor-container" style={{ padding: currentPadding}}>
+                    <Header languageIcon={languageIcon}/>
+                    <AceEditor
+                        value={code}
+                        editorProps={{ $blockScrolling: true }}
+                        fontSize={16}
+                        theme={selectedTheme}
+                        height={`calc(${height}px - ${currentPadding} - ${currentPadding} - 52px)`}
+                        mode={selectedLanguage.toLowerCase()}
+                        wrapEnabled
+                        showPrintMargin={false}
+                        showGutter={false}
+                        highlightActiveLine={false}
+                        className="ace-editor-wrapper"
+                        onChange={handleCodeChange}
+                    />
                 </div>
-                <AceEditor
-                    value={code}
-                    editorProps={{ $blockScrolling: true }}
-                    fontSize={16}
-                    theme={selectedTheme}
-                    height={`calc(${height}px - ${currentPadding} - ${currentPadding} - 52px)`}
-                    mode={selectedLanguage.toLowerCase()}
-                    wrapEnabled
-                    showPrintMargin={false}
-                    showGutter={false}
-                    highlightActiveLine={false}
-                    className="ace-editor-wrapper"
-                />
-
-            </div>
-        </Resizable>
+            </Resizable>
+        </div>
     );
-};
+});
 
 export default CodeEditor;

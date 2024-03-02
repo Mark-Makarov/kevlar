@@ -7,7 +7,7 @@ import { useState } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 
 // constants
-import { BACKGROUND_COLORS } from "@/constants/background-colors";
+import { BACKGROUND_COLORS } from "@/constants/styles";
 
 // components
 import { ChevronDown } from "lucide-react"
@@ -33,7 +33,7 @@ setSelectedBackground,
 
     return (
         <OutsideClickHandler onOutsideClick={() => setShowDropdown(false)}>
-            <div className="background-selector" onClick={toggleDropdown}>
+            <div onClick={toggleDropdown}>
                 <p className="py-[5px] text-sm font-medium">Фон</p>
                 <div className="dropdown-title w-[62px] hover:border-white ease-linear transition-all duration-300">
                     <div className="rounded-full w-[20px] h-[20px]" style={{ background: selectedBackground }}/>
