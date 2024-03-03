@@ -107,4 +107,5 @@ currentPadding,
     );
 });
 
+CodeEditor.displayName = "CodeEditor";
 export default CodeEditor;
