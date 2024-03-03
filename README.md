@@ -1,5 +1,5 @@
 ## [Carbon](https://carbon.now.sh/) code to image clone.
-## Demo: [kevlar.astroflare.online](https://www.kevlar.astroflare.online/)
+## Demo: [kevlar.astroflare.online](https://kevlar.astroflare.online)
 
 ### Stack: 
 - Next.js 14
